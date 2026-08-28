@@ -10,10 +10,7 @@
     "undoing-worked-example",
     "undoing-machine-visual",
     "undoing-check-hook",
-    "family-heading",
-    "family-same-derivative",
-    "family-shift-visual",
-    "family-plus-c",
+    "block-1787889437176",
     "writing-heading",
     "writing-notation",
     "writing-integral-formula",
@@ -23,7 +20,11 @@
     "writing-question-naming",
     "wrapping-heading",
     "wrapping-recap",
-    "wrapping-next"
+    "wrapping-next",
+    "undoing-question-twenty",
+    "undoing-question-power",
+    "family-question-count",
+    "family-question-constant"
   ],
   "rows": [
     {
@@ -135,47 +136,11 @@
       }
     },
     {
-      "id": "layout-family-heading",
+      "id": "layout-block-1787889437176",
       "type": "stack",
       "columns": [
         [
-          "family-heading"
-        ]
-      ],
-      "props": {
-        "maxWidth": "xl"
-      }
-    },
-    {
-      "id": "layout-family-same-derivative",
-      "type": "stack",
-      "columns": [
-        [
-          "family-same-derivative"
-        ]
-      ],
-      "props": {
-        "maxWidth": "xl"
-      }
-    },
-    {
-      "id": "layout-family-shift-visual",
-      "type": "stack",
-      "columns": [
-        [
-          "family-shift-visual"
-        ]
-      ],
-      "props": {
-        "maxWidth": "xl"
-      }
-    },
-    {
-      "id": "layout-family-plus-c",
-      "type": "stack",
-      "columns": [
-        [
-          "family-plus-c"
+          "block-1787889437176"
         ]
       ],
       "props": {
@@ -285,6 +250,54 @@
       "columns": [
         [
           "wrapping-next"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "editor-full-undoing-question-twenty",
+      "type": "stack",
+      "columns": [
+        [
+          "undoing-question-twenty"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "editor-full-undoing-question-power",
+      "type": "stack",
+      "columns": [
+        [
+          "undoing-question-power"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "editor-full-family-question-count",
+      "type": "stack",
+      "columns": [
+        [
+          "family-question-count"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "editor-full-family-question-constant",
+      "type": "stack",
+      "columns": [
+        [
+          "family-question-constant"
         ]
       ],
       "props": {

@@ -228,61 +228,10 @@ function FamilyCurveFigure() {
 }
 
 export const familyOfCurvesBlocks: ReactElement[] = [
-    <StackLayout key="layout-family-heading" maxWidth="xl">
-        <Block id="family-heading" padding="md">
-            <EditableH2 id="h2-family-heading" blockId="family-heading">
-                The Family of Curves
-            </EditableH2>
-        </Block>
-    </StackLayout>,
 
-    <StackLayout key="layout-family-same-derivative" maxWidth="xl">
-        <Block id="family-same-derivative" padding="sm">
-            <EditableParagraph id="para-family-same-derivative" blockId="family-same-derivative">
-                Differentiate x² + 1 with the power rule and you get 2x. Now differentiate x² + 7: the
-                x² still gives 2x, and a lone number gives nothing at all, so the answer is 2x again.
-                The{" "}
-                <InlineLinkedHighlight
-                    id="highlight-family-curve"
-                    varName="familyHighlight"
-                    highlightId="curve"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('familyHighlight'))}
-                >
-                    curve
-                </InlineLinkedHighlight>
-                {" "}below slides up and down, so put it where you think the true answer sits, then let
-                go and see what else turns up.
-            </EditableParagraph>
-        </Block>
-    </StackLayout>,
-
-    <StackLayout key="layout-family-shift-visual" maxWidth="xl">
-        <Block id="family-shift-visual" padding="sm" hasVisualization>
-            <FamilyCurveFigure />
-        </Block>
-    </StackLayout>,
-
-    <StackLayout key="layout-family-plus-c" maxWidth="xl">
-        <Block id="family-plus-c" padding="sm">
-            <EditableParagraph id="para-family-plus-c" blockId="family-plus-c">
-                So reversing a derivative never gives one function, it gives a{" "}
-                <InlineLinkedHighlight
-                    id="highlight-family-whole-family"
-                    varName="familyHighlight"
-                    highlightId="family"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('familyHighlight'))}
-                >
-                    whole family
-                </InlineLinkedHighlight>
-                . Slide it to x² +{" "}
-                <InlineScrubbleNumber
-                    varName="familyShift"
-                    {...numberPropsFromDefinition(getVariableInfo('familyShift'))}
-                />
-                {" "}and it still differentiates back to 2x, which is why we write + C for the constant
-                we have no way of knowing. Leaving the + C off quietly throws away every member of the
-                family but one.
-            </EditableParagraph>
+    <StackLayout key="layout-block-1787889437176" maxWidth="xl">
+        <Block id="block-1787889437176" padding="sm">
+            <EditableParagraph id="para-block-1787889437176" blockId="block-1787889437176"></EditableParagraph>
         </Block>
     </StackLayout>,
 

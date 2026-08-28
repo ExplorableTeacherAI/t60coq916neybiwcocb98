@@ -86,6 +86,66 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
     // ========================================
 
     // ─────────────────────────────────────────
+    // Section: The Family of Curves (linked curve + steepness views)
+    // ─────────────────────────────────────────
+    familyShift: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Constant added to the curve',
+        description: 'The constant C in y = x^2 + C; shared by both linked views',
+        min: -3,
+        max: 3,
+        step: 0.5,
+        color: '#62D0AD',
+    },
+    familyPointX: {
+        defaultValue: 1,
+        type: 'number',
+        label: 'Marker position',
+        description: 'The x position of the marker shown in both linked views',
+        min: -2.2,
+        max: 2.2,
+        step: 0.1,
+        color: '#8E90F5',
+    },
+    familyCommitted: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Prediction committed',
+        description: 'Set to 1 once the student has released the curve, revealing the rest of the family',
+        min: 0,
+        max: 1,
+        step: 1,
+    },
+    familyHighlight: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Family figure highlight',
+        description: 'Which part of the linked curve and steepness views is highlighted from the prose',
+        color: '#0F766E',
+        bgColor: 'rgba(98, 208, 173, 0.22)',
+    },
+    answer_family_count: {
+        defaultValue: '',
+        type: 'select',
+        label: 'How many functions have derivative 2x',
+        description: 'Student answer for the number of functions sharing the derivative 2x',
+        placeholder: '???',
+        correctAnswer: 'infinitely many',
+        options: ['just one', 'exactly two', 'infinitely many'],
+        color: '#0F766E',
+    },
+    answer_family_constant: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Missing constant',
+        description: 'Student answer for what must be added when reversing 2x',
+        placeholder: '???',
+        correctAnswer: ['C', '+C', '+ C'],
+        color: '#0F766E',
+    },
+
+    // ─────────────────────────────────────────
     // Section: Undoing the Power Rule (answer-box builder)
     // ─────────────────────────────────────────
     reverseCoefficient: {

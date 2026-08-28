@@ -98,16 +98,6 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         step: 0.5,
         color: '#62D0AD',
     },
-    familyPointX: {
-        defaultValue: 1,
-        type: 'number',
-        label: 'Marker position',
-        description: 'The x position of the marker shown in both linked views',
-        min: -2.2,
-        max: 2.2,
-        step: 0.1,
-        color: '#8E90F5',
-    },
     familyCommitted: {
         defaultValue: 0,
         type: 'number',

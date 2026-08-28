@@ -85,6 +85,56 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
     // ADD YOUR VARIABLES HERE
     // ========================================
 
+    // ─────────────────────────────────────────
+    // Section: Writing It Down (integral notation tile builder)
+    // ─────────────────────────────────────────
+    integralTilesPlaced: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Integral pieces placed',
+        description: 'How many symbol tiles the student has correctly placed on the statement line (0-6)',
+        min: 0,
+        max: 6,
+        step: 1,
+        color: '#62D0AD',
+    },
+    integralDxPlaced: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'dx piece placed',
+        description: 'Set to 1 once the dx tile is correctly placed in the statement',
+        min: 0,
+        max: 1,
+        step: 1,
+        color: '#62D0AD',
+    },
+    integralSymbolHighlight: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Integral symbol highlight',
+        description: 'Which piece of the integral statement is currently highlighted from the prose',
+        color: '#0F766E',
+        bgColor: 'rgba(98, 208, 173, 0.22)',
+    },
+    answer_writing_reverse: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Reverse 12x^5 answer',
+        description: 'Student answer for the number in front when reversing 12x^5',
+        placeholder: '???',
+        correctAnswer: '2',
+        color: '#0F766E',
+    },
+    answer_writing_dx: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Naming piece answer',
+        description: 'Student answer naming the piece of notation that says which letter is reversed',
+        placeholder: '???',
+        correctAnswer: ['dx', 'd x'],
+        color: '#0F766E',
+    },
+
     // Uncomment and modify these examples for your lesson:
 
     /*

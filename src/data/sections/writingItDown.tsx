@@ -426,12 +426,6 @@ export const writingItDownBlocks: ReactElement[] = [
         </Block>
     </StackLayout>,
 
-    <StackLayout key="layout-writing-integral-formula" maxWidth="xl">
-        <Block id="writing-integral-formula" padding="lg">
-            <FormulaBlock latex="\int 6x^2 \, dx \;=\; 2x^3 + C" />
-        </Block>
-    </StackLayout>,
-
     <StackLayout key="layout-writing-practice-visual" maxWidth="xl">
         <Block id="writing-practice-visual" padding="sm" hasVisualization>
             <IntegralTileBuilderFigure />

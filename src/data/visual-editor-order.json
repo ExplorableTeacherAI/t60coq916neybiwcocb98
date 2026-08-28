@@ -13,7 +13,6 @@
     "block-1787889437176",
     "writing-heading",
     "writing-notation",
-    "writing-integral-formula",
     "writing-practice-visual",
     "writing-rule-summary",
     "writing-question-reverse",
@@ -176,7 +175,6 @@
       "type": "stack",
       "columns": [
         [
-          "writing-integral-formula",
           "writing-practice-visual"
         ]
       ],

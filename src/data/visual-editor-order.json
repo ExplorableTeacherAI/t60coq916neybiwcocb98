@@ -1,4 +1,295 @@
 {
-  "version": 2,
-  "blockIds": []
+  "version": 3,
+  "blockIds": [
+    "intro-title",
+    "intro-hook",
+    "intro-promise",
+    "undoing-heading",
+    "undoing-forward",
+    "undoing-worked-formula",
+    "undoing-worked-example",
+    "undoing-machine-visual",
+    "undoing-check-hook",
+    "family-heading",
+    "family-same-derivative",
+    "family-shift-visual",
+    "family-plus-c",
+    "writing-heading",
+    "writing-notation",
+    "writing-integral-formula",
+    "writing-practice-visual",
+    "writing-rule-summary",
+    "writing-question-reverse",
+    "writing-question-naming",
+    "wrapping-heading",
+    "wrapping-recap",
+    "wrapping-next"
+  ],
+  "rows": [
+    {
+      "id": "layout-intro-title",
+      "type": "stack",
+      "columns": [
+        [
+          "intro-title"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-intro-hook",
+      "type": "stack",
+      "columns": [
+        [
+          "intro-hook"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-intro-promise",
+      "type": "stack",
+      "columns": [
+        [
+          "intro-promise"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-undoing-heading",
+      "type": "stack",
+      "columns": [
+        [
+          "undoing-heading"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-undoing-forward",
+      "type": "stack",
+      "columns": [
+        [
+          "undoing-forward"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-undoing-worked-formula",
+      "type": "stack",
+      "columns": [
+        [
+          "undoing-worked-formula"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-undoing-worked-example",
+      "type": "stack",
+      "columns": [
+        [
+          "undoing-worked-example"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-undoing-machine-visual",
+      "type": "stack",
+      "columns": [
+        [
+          "undoing-machine-visual"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-undoing-check-hook",
+      "type": "stack",
+      "columns": [
+        [
+          "undoing-check-hook"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-family-heading",
+      "type": "stack",
+      "columns": [
+        [
+          "family-heading"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-family-same-derivative",
+      "type": "stack",
+      "columns": [
+        [
+          "family-same-derivative"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-family-shift-visual",
+      "type": "stack",
+      "columns": [
+        [
+          "family-shift-visual"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-family-plus-c",
+      "type": "stack",
+      "columns": [
+        [
+          "family-plus-c"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-writing-heading",
+      "type": "stack",
+      "columns": [
+        [
+          "writing-heading"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-writing-notation",
+      "type": "stack",
+      "columns": [
+        [
+          "writing-notation"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-writing-integral-formula",
+      "type": "stack",
+      "columns": [
+        [
+          "writing-integral-formula",
+          "writing-practice-visual"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-writing-rule-summary",
+      "type": "stack",
+      "columns": [
+        [
+          "writing-rule-summary"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-writing-question-reverse",
+      "type": "stack",
+      "columns": [
+        [
+          "writing-question-reverse"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-writing-question-naming",
+      "type": "stack",
+      "columns": [
+        [
+          "writing-question-naming"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-wrapping-heading",
+      "type": "stack",
+      "columns": [
+        [
+          "wrapping-heading"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-wrapping-recap",
+      "type": "stack",
+      "columns": [
+        [
+          "wrapping-recap"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-wrapping-next",
+      "type": "stack",
+      "columns": [
+        [
+          "wrapping-next"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    }
+  ]
 }

@@ -86,6 +86,66 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
     // ========================================
 
     // ─────────────────────────────────────────
+    // Section: Undoing the Power Rule (answer-box builder)
+    // ─────────────────────────────────────────
+    reverseCoefficient: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Answer coefficient',
+        description: 'The number tile currently sitting in the answer box (0 means empty)',
+        min: 0,
+        max: 8,
+        step: 1,
+        color: '#62D0AD',
+    },
+    reversePower: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Answer power',
+        description: 'The power tile currently sitting in the answer box (0 means empty)',
+        min: 0,
+        max: 5,
+        step: 1,
+        color: '#62D0AD',
+    },
+    reverseMatched: {
+        defaultValue: 0,
+        type: 'number',
+        label: 'Answer matches target',
+        description: 'Set to 1 once the built answer differentiates back to 8x^3',
+        min: 0,
+        max: 1,
+        step: 1,
+        color: '#62D0AD',
+    },
+    reverseHighlight: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Reversal figure highlight',
+        description: 'Which part of the answer-box figure is highlighted from the prose',
+        color: '#0F766E',
+        bgColor: 'rgba(98, 208, 173, 0.22)',
+    },
+    answer_undoing_twenty: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Reverse 20x^3 answer',
+        description: 'Student answer for the number in front when reversing 20x^3',
+        placeholder: '???',
+        correctAnswer: '5',
+        color: '#0F766E',
+    },
+    answer_undoing_power: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Power of the reversed term',
+        description: 'Student answer for the power the reversal of 6x^5 must contain',
+        placeholder: '???',
+        correctAnswer: '6',
+        color: '#0F766E',
+    },
+
+    // ─────────────────────────────────────────
     // Section: Writing It Down (integral notation tile builder)
     // ─────────────────────────────────────────
     integralTilesPlaced: {

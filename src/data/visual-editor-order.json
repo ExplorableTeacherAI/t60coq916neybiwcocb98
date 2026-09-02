@@ -24,6 +24,7 @@
     "writing-rule-summary",
     "writing-general-rule",
     "writing-question-reverse",
+    "block-1788377503784",
     "writing-question-naming",
     "wrapping-heading",
     "wrapping-recap",
@@ -300,6 +301,18 @@
       "columns": [
         [
           "writing-question-reverse"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-block-1788377503784",
+      "type": "stack",
+      "columns": [
+        [
+          "block-1788377503784"
         ]
       ],
       "props": {

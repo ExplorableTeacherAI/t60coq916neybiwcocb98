@@ -46,17 +46,20 @@ export const introReversingBlocks: ReactElement[] = [
     <StackLayout key="layout-intro-promise" maxWidth="xl">
         <Block id="intro-promise" padding="sm">
             <EditableParagraph id="para-intro-promise" blockId="intro-promise">
-                You already know how to send a function forwards, because the power rule turns{" "}
+                This lesson makes the return trip, from a derivative back to the function it came
+                from. In short:
+                <br />
+                {"\u2022 Forwards: the power rule sends "}
                 <InlineFormula
                     latex="\clr{fn}{x}^{\clr{pow}{5}}"
                     colorMap={{ fn: FUNCTION_HUE, pow: POWER }}
                 />
-                {" "}into{" "}
+                {" to "}
                 <InlineFormula
                     latex="\clr{coef}{5}\clr{fn}{x}^{\clr{pow}{4}}"
                     colorMap={{ coef: COEFFICIENT, fn: FUNCTION_HUE, pow: POWER }}
                 />
-                {" "}in a single line: the{" "}
+                {", moving the "}
                 <InlineTooltip
                     id="tooltip-intro-coefficient"
                     color={COEFFICIENT}
@@ -65,7 +68,7 @@ export const introReversingBlocks: ReactElement[] = [
                 >
                     number in front
                 </InlineTooltip>
-                {" "}and the{" "}
+                {" and the "}
                 <InlineTooltip
                     id="tooltip-intro-power"
                     color={POWER}
@@ -74,13 +77,18 @@ export const introReversingBlocks: ReactElement[] = [
                 >
                     power
                 </InlineTooltip>
-                {" "}each move. This lesson is the return trip. Reversing a derivative carries a
-                geometric meaning too, because{" "}
+                {"."}
+                <br />
+                {"\u2022 Backwards: antidifferentiation asks which function differentiates to the one you were handed."}
+                <br />
+                {"\u2022 As area: "}
                 <InlineFormula
                     latex="\textcolor{#0369A1}{\int_{a}^{b}} \textcolor{#0F766E}{f(x)}\,\textcolor{#0369A1}{dx}"
                     colorMap={{}}
                 />
-                {" "}measures the area between the curve and the x-axis from a to b, and the{" "}
+                {" is the area between the curve and the x-axis from a to b."}
+                <br />
+                {"\u2022 The "}
                 <InlineTooltip
                     id="tooltip-intro-fundamental-theorem"
                     color={NOTATION}
@@ -89,8 +97,9 @@ export const introReversingBlocks: ReactElement[] = [
                 >
                     Fundamental Theorem of Calculus
                 </InlineTooltip>
-                {" "}says that area is found by antidifferentiating f. There is a surprise waiting on
-                the way back, though, because the road home does not lead to just one answer.
+                {" joins those two, because that area is found by antidifferentiating f."}
+                <br />
+                {"\u2022 The catch: the road home does not lead to just one answer."}
             </EditableParagraph>
         </Block>
     </StackLayout>,

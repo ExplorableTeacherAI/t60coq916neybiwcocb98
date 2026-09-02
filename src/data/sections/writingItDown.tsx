@@ -475,7 +475,9 @@ export const writingItDownBlocks: ReactElement[] = [
     <StackLayout key="layout-writing-rule-summary" maxWidth="xl">
         <Block id="writing-rule-summary" padding="sm">
             <EditableParagraph id="para-writing-rule-summary" blockId="writing-rule-summary">
-                Three moves cover every one of these: raise the{" "}
+                Three moves cover every one of these:
+                <br />
+                {"\u2022 Raise the "}
                 <InlineSpotColor
                     id="spot-writing-power"
                     varName="rolePower"
@@ -483,7 +485,9 @@ export const writingItDownBlocks: ReactElement[] = [
                 >
                     power
                 </InlineSpotColor>
-                , divide the{" "}
+                {" by one."}
+                <br />
+                {"\u2022 Divide the "}
                 <InlineSpotColor
                     id="spot-writing-coefficient"
                     varName="roleCoefficient"
@@ -491,7 +495,9 @@ export const writingItDownBlocks: ReactElement[] = [
                 >
                     number in front
                 </InlineSpotColor>
-                {" "}by that new power, then add{" "}
+                {" by that new power."}
+                <br />
+                {"\u2022 Add "}
                 <InlineTooltip
                     id="tooltip-writing-constant"
                     color={CONSTANT_HUE.deep}
@@ -500,12 +506,14 @@ export const writingItDownBlocks: ReactElement[] = [
                 >
                     C
                 </InlineTooltip>
-                . Fill the gaps in the general rule below and it will hold for every power of x you
-                ever meet.
+                {" on the end."}
+                <br />
+                {"\u2022 Why C is needed: every constant differentiates to zero, so a derivative keeps no record of the height it came from, and C stands in for all of those heights at once."}
+                <br />
+                {"Fill the gaps in the general rule below and it holds for every power of x you ever meet."}
             </EditableParagraph>
         </Block>
     </StackLayout>,
-
 
     <StackLayout key="layout-writing-general-rule" maxWidth="xl">
         <Block id="writing-general-rule" padding="lg">

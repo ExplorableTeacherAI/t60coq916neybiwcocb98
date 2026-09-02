@@ -4,8 +4,10 @@ import { StackLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
+    InlineFormula,
     InlineLinkedHighlight,
     InlineScrubbleNumber,
+    InlineTooltip,
     InlineClozeChoice,
     InlineClozeInput,
     InlineFeedback,
@@ -40,6 +42,8 @@ const Y_MAX = 10;
 
 const CURVE_HUE = "#62D0AD";
 const CURVE_HUE_DEEP = "#0F766E";
+const CONSTANT_HUE_DEEP = "#7C3AED";
+const POWER_HUE_DEEP = "#4338CA";
 const INK = "#334155";
 const INK_SOFT = "#64748B";
 const AXIS = "#CBD5E1";
@@ -175,7 +179,7 @@ function FamilyCurveDrawing() {
                 {/* Readouts */}
                 <text
                     x="14" y="24" fontSize="14"
-                    fill={curveActive ? CURVE_HUE_DEEP : INK}
+                    fill={shift === 0 ? (curveActive ? CURVE_HUE_DEEP : INK) : CONSTANT_HUE_DEEP}
                     opacity={recede("curve")}
                     style={{ fontVariantNumeric: "tabular-nums", transition: "opacity 150ms ease-out" }}
                 >
@@ -238,7 +242,12 @@ export const familyOfCurvesBlocks: ReactElement[] = [
     <StackLayout key="layout-family-question-count" maxWidth="xl">
         <Block id="family-question-count" padding="md">
             <EditableParagraph id="para-family-question-count" blockId="family-question-count">
-                So the number of different functions whose derivative is 2x turns out to be{" "}
+                So the number of different functions whose derivative is{" "}
+                <InlineFormula
+                    latex="\clr{coef}{2}\clr{fn}{x}"
+                    colorMap={{ coef: "#B45309", fn: CURVE_HUE_DEEP }}
+                />
+                {" "}turns out to be{" "}
                 <InlineFeedback
                     varName="answer_family_count"
                     correctValue="infinitely many"
@@ -287,8 +296,26 @@ export const familyOfCurvesBlocks: ReactElement[] = [
     <StackLayout key="layout-family-question-constant" maxWidth="xl">
         <Block id="family-question-constant" padding="md">
             <EditableParagraph id="para-family-question-constant" blockId="family-question-constant">
-                Writing the reversal of 2x as x² on its own names one curve out of that whole family,
-                so the piece still missing from the end of the answer is{" "}
+                Writing the reversal of{" "}
+                <InlineFormula
+                    latex="\clr{coef}{2}\clr{fn}{x}"
+                    colorMap={{ coef: "#B45309", fn: CURVE_HUE_DEEP }}
+                />
+                {" "}as{" "}
+                <InlineFormula
+                    latex="\clr{fn}{x}^{\clr{pow}{2}}"
+                    colorMap={{ fn: CURVE_HUE_DEEP, pow: POWER_HUE_DEEP }}
+                />
+                {" "}on its own names one curve out of that whole family, so the{" "}
+                <InlineTooltip
+                    id="tooltip-family-constant"
+                    color={CONSTANT_HUE_DEEP}
+                    bgColor="rgba(172, 139, 249, 0.18)"
+                    tooltip="The constant of integration: written in violet throughout this lesson, it stands in for every height the curve could sit at."
+                >
+                    piece still missing
+                </InlineTooltip>
+                {" "}from the end of the answer is{" "}
                 <InlineFeedback
                     varName="answer_family_constant"
                     correctValue={["C", "+C", "+ C"]}

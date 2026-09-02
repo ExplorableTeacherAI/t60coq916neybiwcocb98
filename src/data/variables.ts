@@ -123,7 +123,8 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         placeholder: '???',
         correctAnswer: 'infinitely many',
         options: ['just one', 'exactly two', 'infinitely many'],
-        color: '#0F766E',
+        color: '#7C3AED',
+        bgColor: 'rgba(172, 139, 249, 0.18)',
     },
     answer_family_constant: {
         defaultValue: '',
@@ -132,7 +133,8 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for what must be added when reversing 2x',
         placeholder: '???',
         correctAnswer: ['C', '+C', '+ C'],
-        color: '#0F766E',
+        color: '#7C3AED',
+        bgColor: 'rgba(172, 139, 249, 0.18)',
     },
 
     // ─────────────────────────────────────────
@@ -183,7 +185,8 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for the number in front when reversing 20x^3',
         placeholder: '???',
         correctAnswer: '5',
-        color: '#0F766E',
+        color: '#B45309',
+        bgColor: 'rgba(247, 178, 59, 0.18)',
     },
     answer_undoing_power: {
         defaultValue: '',
@@ -192,7 +195,8 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for the power the reversal of 6x^5 must contain',
         placeholder: '???',
         correctAnswer: '6',
-        color: '#0F766E',
+        color: '#4338CA',
+        bgColor: 'rgba(142, 144, 245, 0.18)',
     },
 
     // ─────────────────────────────────────────
@@ -233,7 +237,8 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for the number in front when reversing 12x^5',
         placeholder: '???',
         correctAnswer: '2',
-        color: '#0F766E',
+        color: '#B45309',
+        bgColor: 'rgba(247, 178, 59, 0.18)',
     },
     answer_writing_dx: {
         defaultValue: '',
@@ -242,7 +247,123 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer naming the piece of notation that says which letter is reversed',
         placeholder: '???',
         correctAnswer: ['dx', 'd x'],
+        color: '#0369A1',
+        bgColor: 'rgba(98, 204, 249, 0.18)',
+    },
+
+    // ─────────────────────────────────────────
+    // Shared colour roles — one quantity, one colour, everywhere
+    // (prose spot colours, formula terms, and figure ink all read from here)
+    // ─────────────────────────────────────────
+    roleCoefficient: {
+        defaultValue: 0,
+        type: 'spotColor',
+        label: 'Number in front',
+        description: 'Warm amber: the coefficient sitting in front of a power of x',
+        color: '#B45309',
+    },
+    rolePower: {
+        defaultValue: 0,
+        type: 'spotColor',
+        label: 'Power',
+        description: 'Soft indigo: the exponent on x',
+        color: '#4338CA',
+    },
+    roleConstant: {
+        defaultValue: 0,
+        type: 'spotColor',
+        label: 'Constant of integration',
+        description: 'Soft violet: the + C that reversing always leaves behind',
+        color: '#7C3AED',
+    },
+    roleNotation: {
+        defaultValue: 0,
+        type: 'spotColor',
+        label: 'Integral notation',
+        description: 'Soft sky: the stretched S and the dx that wrap the function',
+        color: '#0369A1',
+    },
+    roleFunction: {
+        defaultValue: 0,
+        type: 'spotColor',
+        label: 'Function being reversed',
+        description: 'Soft teal: the function you start from and the answer you land on',
         color: '#0F766E',
+    },
+
+    // ─────────────────────────────────────────
+    // Section: Undoing the Power Rule (live reversal formula)
+    // ─────────────────────────────────────────
+    reverseStartCoefficient: {
+        defaultValue: 8,
+        type: 'number',
+        label: 'Coefficient being reversed',
+        description: 'The number in front of the term the formula is reversing',
+        min: 1,
+        max: 12,
+        step: 1,
+        color: '#B45309',
+    },
+    reverseStartPower: {
+        defaultValue: 3,
+        type: 'number',
+        label: 'Power being reversed',
+        description: 'The power on x in the term the formula is reversing',
+        min: 1,
+        max: 6,
+        step: 1,
+        color: '#4338CA',
+    },
+    reverseNewPower: {
+        defaultValue: 4,
+        type: 'number',
+        label: 'Raised power',
+        description: 'Derived: the power after it climbs by one',
+        min: 2,
+        max: 7,
+        step: 1,
+        color: '#4338CA',
+    },
+    reverseResultCoefficient: {
+        defaultValue: 2,
+        type: 'number',
+        label: 'Coefficient of the reversed term',
+        description: 'Derived: the starting coefficient divided by the raised power',
+        min: 0,
+        max: 12,
+        step: 0.01,
+        color: '#B45309',
+    },
+    reverseExample: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Named example to jump to',
+        description: 'Set by an inline trigger to snap the live formula onto a named case',
+    },
+
+    // ─────────────────────────────────────────
+    // Section: Writing It Down (general rule check inside the formula)
+    // ─────────────────────────────────────────
+    ruleDivisor: {
+        defaultValue: '',
+        type: 'select',
+        label: 'What you divide by',
+        description: 'Student choice for the divisor in the general reversal rule',
+        placeholder: '?',
+        correctAnswer: 'n + 1',
+        options: ['n - 1', 'n', 'n + 1'],
+        color: '#B45309',
+        bgColor: 'rgba(247, 178, 59, 0.18)',
+    },
+    ruleConstant: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Missing constant in the general rule',
+        description: 'Student answer for the constant term at the end of the general rule',
+        placeholder: '?',
+        correctAnswer: ['C', '+C', '+ C'],
+        color: '#7C3AED',
+        bgColor: 'rgba(172, 139, 249, 0.18)',
     },
 
     // Uncomment and modify these examples for your lesson:

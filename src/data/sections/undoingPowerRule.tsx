@@ -4,7 +4,10 @@ import { StackLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
+    InlineFormula,
     InlineLinkedHighlight,
+    InlineSpotColor,
+    InlineTrigger,
     InlineClozeInput,
     InlineFeedback,
     InteractionHintSequence,
@@ -15,6 +18,8 @@ import {
     getVariableInfo,
     clozePropsFromDefinition,
     linkedHighlightPropsFromDefinition,
+    spotColorPropsFromDefinition,
+    scrubVarsFromDefinitions,
 } from "../variables";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -27,10 +32,22 @@ const STAGE_WIDTH = 600;
 const STAGE_HEIGHT = 290;
 const TILE = 48;
 
-const ACCENT = "#62D0AD";
+// Colour roles shared with the prose and the formulas: the number in front is
+// amber, the power is indigo, the function being reversed is teal.
 const ACCENT_DEEP = "#0F766E";
+const NUMBER_HUE = "#F7B23B";
+const NUMBER_HUE_DEEP = "#B45309";
+const NUMBER_TINT = "rgba(247, 178, 59, 0.20)";
+const POWER_HUE = "#8E90F5";
+const POWER_HUE_DEEP = "#4338CA";
+const POWER_TINT = "rgba(142, 144, 245, 0.20)";
 const INK = "#334155";
 const INK_SOFT = "#64748B";
+
+const hueFor = (kind: "number" | "power") =>
+    kind === "number"
+        ? { soft: NUMBER_HUE, deep: NUMBER_HUE_DEEP, tint: NUMBER_TINT }
+        : { soft: POWER_HUE, deep: POWER_HUE_DEEP, tint: POWER_TINT };
 
 const TARGET_COEFFICIENT = 8;
 const TARGET_POWER = 3;
@@ -227,7 +244,9 @@ function ReversalBuilderDrawing() {
                                     top: slot.y,
                                     width: slot.size,
                                     height: slot.size,
-                                    border: filled ? "none" : "2px dashed #CBD5E1",
+                                    border: filled
+                                        ? "none"
+                                        : `2px dashed ${hueFor(slot.kind).soft}`,
                                     boxShadow: answerActive && !filled
                                         ? "0 0 0 7px rgba(98, 208, 173, 0.28)"
                                         : "none",
@@ -277,7 +296,7 @@ function ReversalBuilderDrawing() {
                             left: 356,
                             top: 44,
                             fontSize: 34,
-                            color: INK,
+                            color: ACCENT_DEEP,
                             fontFamily: "Georgia, 'Times New Roman', serif",
                             fontStyle: "italic",
                             boxShadow: targetActive ? "0 0 0 7px rgba(98, 208, 173, 0.28)" : "none",
@@ -334,19 +353,20 @@ function ReversalBuilderDrawing() {
                     {/* Loose tiles */}
                     <div
                         className="absolute"
-                        style={{ left: 32, top: 192, fontSize: 13, color: INK_SOFT, opacity: dim("tiles") }}
+                        style={{ left: 32, top: 192, fontSize: 13, color: NUMBER_HUE_DEEP, opacity: dim("tiles") }}
                     >
                         Numbers
                     </div>
                     <div
                         className="absolute"
-                        style={{ left: 320, top: 192, fontSize: 13, color: INK_SOFT, opacity: dim("tiles") }}
+                        style={{ left: 320, top: 192, fontSize: 13, color: POWER_HUE_DEEP, opacity: dim("tiles") }}
                     >
                         Powers
                     </div>
                     {TILES.map((tile) => {
                         const isPlaced = inNumberSlot === tile.id || inPowerSlot === tile.id;
                         const position = positions[tile.id];
+                        const hue = hueFor(tile.kind);
                         return (
                             <div
                                 key={tile.id}
@@ -360,14 +380,14 @@ function ReversalBuilderDrawing() {
                                     top: position.y,
                                     width: TILE,
                                     height: TILE,
-                                    backgroundColor: isPlaced ? "rgba(98, 208, 173, 0.18)" : "#FFFFFF",
-                                    border: `2px solid ${isPlaced ? ACCENT_DEEP : ACCENT}`,
+                                    backgroundColor: isPlaced ? hue.tint : "#FFFFFF",
+                                    border: `2px solid ${isPlaced ? hue.deep : hue.soft}`,
                                     boxShadow:
                                         dragging === tile.id
                                             ? "0 4px 10px rgba(15, 23, 42, 0.18)"
                                             : "0 1px 3px rgba(15, 23, 42, 0.12)",
                                     opacity: highlight !== "" && !(isPlaced && highlight === "answer") ? 0.38 : 1,
-                                    color: INK,
+                                    color: hue.deep,
                                     fontSize: 22,
                                     fontFamily: "Georgia, 'Times New Roman', serif",
                                     fontStyle: "italic",
@@ -434,6 +454,63 @@ function ReversalBuilderFigure() {
     );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// The reversal rule, alive: the student drags the amber coefficient and the
+// indigo power, and the rest of the line re-derives itself from those two.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const REVERSAL_LATEX = [
+    "\\scrub{reverseStartCoefficient}\\textcolor{#0F766E}{x}^{\\scrub{reverseStartPower}}",
+    "\\;\\longrightarrow\\;",
+    "\\frac{\\val{reverseStartCoefficient}\\,\\textcolor{#0F766E}{x}^{\\val{reverseNewPower}}}{\\val{reverseNewPower}}",
+    "\\;=\\;",
+    "\\val{reverseResultCoefficient}\\,\\textcolor{#0F766E}{x}^{\\val{reverseNewPower}}",
+].join(" ");
+
+function ReversalRuleFormula() {
+    const setVar = useSetVar();
+    const coefficient = useVar<number>("reverseStartCoefficient", 8);
+    const power = useVar<number>("reverseStartPower", 3);
+    const preset = useVar<string>("reverseExample", "");
+
+    // Everything to the right of the arrow is derived from the two draggables.
+    useEffect(() => {
+        setVar("reverseNewPower", power + 1);
+        setVar("reverseResultCoefficient", coefficient / (power + 1));
+    }, [coefficient, power, setVar]);
+
+    // An inline trigger in the prose can snap the line onto a named case.
+    useEffect(() => {
+        if (preset === "") return;
+        if (preset === "eight-cubed") {
+            setVar("reverseStartCoefficient", 8);
+            setVar("reverseStartPower", 3);
+        } else if (preset === "six-fifth") {
+            setVar("reverseStartCoefficient", 6);
+            setVar("reverseStartPower", 5);
+        }
+        setVar("reverseExample", "");
+    }, [preset, setVar]);
+
+    return (
+        <FormulaBlock
+            latex={REVERSAL_LATEX}
+            variables={{
+                ...scrubVarsFromDefinitions([
+                    "reverseStartCoefficient",
+                    "reverseStartPower",
+                    "reverseNewPower",
+                ]),
+                reverseResultCoefficient: {
+                    color: NUMBER_HUE_DEEP,
+                    formatValue: (value: number) =>
+                        Number.isInteger(value) ? String(value) : value.toFixed(2),
+                },
+            }}
+        />
+    );
+}
+
 export const undoingPowerRuleBlocks: ReactElement[] = [
     <StackLayout key="layout-undoing-heading" maxWidth="xl">
         <Block id="undoing-heading" padding="md">
@@ -446,25 +523,75 @@ export const undoingPowerRuleBlocks: ReactElement[] = [
     <StackLayout key="layout-undoing-forward" maxWidth="xl">
         <Block id="undoing-forward" padding="sm">
             <EditableParagraph id="para-undoing-forward" blockId="undoing-forward">
-                Differentiating x³ gives 3x², so the power rule does two jobs: multiply by the power,
-                then drop the power by one. Coming back, you do both jobs the other way round: raise
-                the power first, then divide by that new power.
+                Differentiating{" "}
+                <InlineFormula
+                    latex="\clr{fn}{x}^{\clr{pow}{3}}"
+                    colorMap={{ fn: ACCENT_DEEP, pow: POWER_HUE_DEEP }}
+                />
+                {" "}gives{" "}
+                <InlineFormula
+                    latex="\clr{coef}{3}\clr{fn}{x}^{\clr{pow}{2}}"
+                    colorMap={{ coef: NUMBER_HUE_DEEP, fn: ACCENT_DEEP, pow: POWER_HUE_DEEP }}
+                />
+                , so the power rule multiplies by the{" "}
+                <InlineSpotColor
+                    id="spot-undoing-power-forward"
+                    varName="rolePower"
+                    {...spotColorPropsFromDefinition(getVariableInfo('rolePower'))}
+                >
+                    power
+                </InlineSpotColor>
+                {" "}and then drops it by one. Coming back, both jobs run the other way round: the{" "}
+                <InlineSpotColor
+                    id="spot-undoing-power-back"
+                    varName="rolePower"
+                    {...spotColorPropsFromDefinition(getVariableInfo('rolePower'))}
+                >
+                    power
+                </InlineSpotColor>
+                {" "}climbs by one, and the{" "}
+                <InlineSpotColor
+                    id="spot-undoing-coefficient"
+                    varName="roleCoefficient"
+                    {...spotColorPropsFromDefinition(getVariableInfo('roleCoefficient'))}
+                >
+                    number in front
+                </InlineSpotColor>
+                {" "}is shared out by that new power.
             </EditableParagraph>
         </Block>
     </StackLayout>,
 
     <StackLayout key="layout-undoing-worked-formula" maxWidth="xl">
         <Block id="undoing-worked-formula" padding="lg">
-            <FormulaBlock latex="8x^3 \;\longrightarrow\; \frac{8x^{4}}{4} \;=\; 2x^{4}" />
+            <ReversalRuleFormula />
         </Block>
     </StackLayout>,
 
     <StackLayout key="layout-undoing-worked-example" maxWidth="xl">
         <Block id="undoing-worked-example" padding="sm">
             <EditableParagraph id="para-undoing-worked-example" blockId="undoing-worked-example">
-                Follow it on 8x³: raise the power to x⁴, then divide by that new power, leaving 2x⁴.
-                Differentiate 2x⁴ and 8x³ comes straight back, which is how you check a reversal. The
-                same{" "}
+                On{" "}
+                <InlineTrigger
+                    id="trigger-undoing-eight-cubed"
+                    varName="reverseExample"
+                    value="eight-cubed"
+                    icon="refresh"
+                >
+                    the worked case 8x³
+                </InlineTrigger>
+                {" "}the power climbs to 4 and the 8 is shared into four parts, leaving 2x⁴, and
+                differentiating that brings 8x³ straight back. Drag either number in the line above
+                to reverse something else, or{" "}
+                <InlineTrigger
+                    id="trigger-undoing-six-fifth"
+                    varName="reverseExample"
+                    value="six-fifth"
+                    icon="zap"
+                >
+                    jump to 6x⁵
+                </InlineTrigger>
+                {" "}and watch the whole right-hand side rebuild itself. The same{" "}
                 <InlineLinkedHighlight
                     id="highlight-undoing-target"
                     varName="reverseHighlight"
@@ -482,7 +609,23 @@ export const undoingPowerRuleBlocks: ReactElement[] = [
                 >
                     empty box
                 </InlineLinkedHighlight>
-                , so drop a number and a power into it and watch the check happen underneath.
+                , so drop an amber{" "}
+                <InlineSpotColor
+                    id="spot-undoing-number-tile"
+                    varName="roleCoefficient"
+                    {...spotColorPropsFromDefinition(getVariableInfo('roleCoefficient'))}
+                >
+                    number tile
+                </InlineSpotColor>
+                {" "}and an indigo{" "}
+                <InlineSpotColor
+                    id="spot-undoing-power-tile"
+                    varName="rolePower"
+                    {...spotColorPropsFromDefinition(getVariableInfo('rolePower'))}
+                >
+                    power tile
+                </InlineSpotColor>
+                {" "}into it and watch the check happen underneath.
             </EditableParagraph>
         </Block>
     </StackLayout>,

@@ -6,6 +6,7 @@ import {
     EditableParagraph,
     InlineTooltip,
     InlineLinkedHighlight,
+    InlineSpotColor,
     InlineClozeInput,
     InlineFeedback,
     InteractionHintSequence,
@@ -15,7 +16,7 @@ import { useVar, useSetVar } from "@/stores";
 import {
     getVariableInfo,
     clozePropsFromDefinition,
-    linkedHighlightPropsFromDefinition,
+    spotColorPropsFromDefinition,
 } from "../variables";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -31,10 +32,22 @@ const TILE_HEIGHT = 48;
 const SLOT_GAP = 12;
 const SNAP_RADIUS = 78;
 
+// Colour roles: the stretched S and the dx are sky (notation), the functions
+// being reversed are teal, and the + C is violet, matching the prose.
 const ACCENT = "#62D0AD";
 const ACCENT_DEEP = "#0F766E";
-const INK = "#334155";
 const INK_SOFT = "#64748B";
+
+interface Hue {
+    soft: string;
+    deep: string;
+    tint: string;
+}
+
+const NOTATION_HUE: Hue = { soft: "#62CCF9", deep: "#0369A1", tint: "rgba(98, 204, 249, 0.20)" };
+const FUNCTION_HUE: Hue = { soft: "#62D0AD", deep: "#0F766E", tint: "rgba(98, 208, 173, 0.20)" };
+const CONSTANT_HUE: Hue = { soft: "#AC8BF9", deep: "#7C3AED", tint: "rgba(172, 139, 249, 0.20)" };
+const NEUTRAL_HUE: Hue = { soft: "#94A3B8", deep: "#475569", tint: "rgba(148, 163, 184, 0.18)" };
 
 interface TileSpec {
     id: string;
@@ -43,11 +56,13 @@ interface TileSpec {
     width: number;
     home: { x: number; y: number };
     nudge: string;
+    hue: Hue;
 }
 
 const TILES: TileSpec[] = [
     {
         id: "integral-sign",
+        hue: NOTATION_HUE,
         label: "∫",
         slot: 0,
         width: 48,
@@ -56,6 +71,7 @@ const TILES: TileSpec[] = [
     },
     {
         id: "integrand",
+        hue: FUNCTION_HUE,
         label: "6x²",
         slot: 1,
         width: 76,
@@ -64,6 +80,7 @@ const TILES: TileSpec[] = [
     },
     {
         id: "dx",
+        hue: NOTATION_HUE,
         label: "dx",
         slot: 2,
         width: 52,
@@ -72,6 +89,7 @@ const TILES: TileSpec[] = [
     },
     {
         id: "equals",
+        hue: NEUTRAL_HUE,
         label: "=",
         slot: 3,
         width: 46,
@@ -80,6 +98,7 @@ const TILES: TileSpec[] = [
     },
     {
         id: "antiderivative",
+        hue: FUNCTION_HUE,
         label: "2x³",
         slot: 4,
         width: 76,
@@ -88,6 +107,7 @@ const TILES: TileSpec[] = [
     },
     {
         id: "plus-c",
+        hue: CONSTANT_HUE,
         label: "+ C",
         slot: 5,
         width: 62,
@@ -314,16 +334,16 @@ function IntegralTileBuilderDrawing() {
                                     top: position.y,
                                     width: tile.width,
                                     height: TILE_HEIGHT,
-                                    backgroundColor: isPlaced ? "rgba(98, 208, 173, 0.18)" : "#FFFFFF",
-                                    border: `${isActive ? 3 : 2}px solid ${isPlaced || isActive ? ACCENT_DEEP : ACCENT}`,
+                                    backgroundColor: isPlaced ? tile.hue.tint : "#FFFFFF",
+                                    border: `${isActive ? 3 : 2}px solid ${isPlaced || isActive ? tile.hue.deep : tile.hue.soft}`,
                                     boxShadow: isActive
-                                        ? "0 0 0 7px rgba(98, 208, 173, 0.28)"
+                                        ? `0 0 0 7px ${tile.hue.tint}`
                                         : dragging === tile.id
                                           ? "0 4px 10px rgba(15, 23, 42, 0.18)"
                                           : "0 1px 3px rgba(15, 23, 42, 0.12)",
                                     opacity: isDimmed ? 0.38 : 1,
                                     transform: `scale(${isActive ? 1.06 : 1})`,
-                                    color: INK,
+                                    color: tile.hue.deep,
                                     fontSize: 22,
                                     fontFamily: "Georgia, 'Times New Roman', serif",
                                     fontStyle: "italic",
@@ -385,6 +405,15 @@ function IntegralTileBuilderFigure() {
     );
 }
 
+// The general rule with two gaps: the divisor and the constant on the end.
+const GENERAL_RULE_LATEX = [
+    "\\textcolor{#0369A1}{\\int}\\;\\textcolor{#0F766E}{x^{n}}\\,\\textcolor{#0369A1}{dx}",
+    "\\;=\\;",
+    "\\frac{\\textcolor{#0F766E}{x^{n+1}}}{\\choice{ruleDivisor}}",
+    "\\;+\\;",
+    "\\cloze{ruleConstant}",
+].join(" ");
+
 export const writingItDownBlocks: ReactElement[] = [
     <StackLayout key="layout-writing-heading" maxWidth="xl">
         <Block id="writing-heading" padding="md">
@@ -398,7 +427,7 @@ export const writingItDownBlocks: ReactElement[] = [
         <Block id="writing-notation" padding="sm">
             <EditableParagraph id="para-writing-notation" blockId="writing-notation">
                 Mathematicians mark this reversal with a stretched S called the{" "}
-                <InlineTooltip id="tooltip-integral-sign" tooltip="The elongated S written before a function to mean: find every function that differentiates back to this one.">
+                <InlineTooltip id="tooltip-integral-sign" color={NOTATION_HUE.deep} bgColor={NOTATION_HUE.tint} tooltip="The elongated S written before a function to mean: find every function that differentiates back to this one.">
                     integral sign
                 </InlineTooltip>
                 , and the{" "}
@@ -406,18 +435,29 @@ export const writingItDownBlocks: ReactElement[] = [
                     id="highlight-writing-dx"
                     varName="integralSymbolHighlight"
                     highlightId="dx"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('integralSymbolHighlight'))}
+                    color={NOTATION_HUE.deep}
+                    bgColor={NOTATION_HUE.tint}
                 >
                     dx
                 </InlineLinkedHighlight>
                 {" "}on the end says which letter you are reversing. The statement below reads as: the
-                function that differentiates back to 6x² is 2x³, plus any constant. Its pieces lie
-                loose underneath, so drag the{" "}
+                function that differentiates back to 6x² is 2x³, plus{" "}
+                <InlineLinkedHighlight
+                    id="highlight-writing-plus-c"
+                    varName="integralSymbolHighlight"
+                    highlightId="plus-c"
+                    color={CONSTANT_HUE.deep}
+                    bgColor={CONSTANT_HUE.tint}
+                >
+                    any constant
+                </InlineLinkedHighlight>
+                . Its pieces lie loose underneath in those same colours, so drag the{" "}
                 <InlineLinkedHighlight
                     id="highlight-writing-integral-sign"
                     varName="integralSymbolHighlight"
                     highlightId="integral-sign"
-                    {...linkedHighlightPropsFromDefinition(getVariableInfo('integralSymbolHighlight'))}
+                    color={NOTATION_HUE.deep}
+                    bgColor={NOTATION_HUE.tint}
                 >
                     stretched S
                 </InlineLinkedHighlight>
@@ -435,10 +475,60 @@ export const writingItDownBlocks: ReactElement[] = [
     <StackLayout key="layout-writing-rule-summary" maxWidth="xl">
         <Block id="writing-rule-summary" padding="sm">
             <EditableParagraph id="para-writing-rule-summary" blockId="writing-rule-summary">
-                Three moves cover every one of these: raise the power, divide by the new power, add C.
-                The stretched S and the dx always travel as a pair, wrapping the function being
-                reversed, while the + C only ever appears on the answer side of the equals sign.
+                Three moves cover every one of these: raise the{" "}
+                <InlineSpotColor
+                    id="spot-writing-power"
+                    varName="rolePower"
+                    {...spotColorPropsFromDefinition(getVariableInfo('rolePower'))}
+                >
+                    power
+                </InlineSpotColor>
+                , divide the{" "}
+                <InlineSpotColor
+                    id="spot-writing-coefficient"
+                    varName="roleCoefficient"
+                    {...spotColorPropsFromDefinition(getVariableInfo('roleCoefficient'))}
+                >
+                    number in front
+                </InlineSpotColor>
+                {" "}by that new power, then add{" "}
+                <InlineTooltip
+                    id="tooltip-writing-constant"
+                    color={CONSTANT_HUE.deep}
+                    bgColor={CONSTANT_HUE.tint}
+                    tooltip="The constant of integration: it stands in for every constant that differentiates away to nothing."
+                >
+                    C
+                </InlineTooltip>
+                . Fill the gaps in the general rule below and it will hold for every power of x you
+                ever meet.
             </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+
+    <StackLayout key="layout-writing-general-rule" maxWidth="xl">
+        <Block id="writing-general-rule" padding="lg">
+            <FormulaBlock
+                latex={GENERAL_RULE_LATEX}
+                clozeChoices={{
+                    ruleDivisor: {
+                        correctAnswer: 'n + 1',
+                        options: ['n - 1', 'n', 'n + 1'],
+                        placeholder: '?',
+                        color: '#B45309',
+                        bgColor: 'rgba(247, 178, 59, 0.20)',
+                    },
+                }}
+                clozeInputs={{
+                    ruleConstant: {
+                        correctAnswer: 'C',
+                        placeholder: '?',
+                        color: '#7C3AED',
+                        bgColor: 'rgba(172, 139, 249, 0.20)',
+                    },
+                }}
+            />
         </Block>
     </StackLayout>,
 

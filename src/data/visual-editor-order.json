@@ -10,20 +10,21 @@
     "undoing-worked-example",
     "undoing-machine-visual",
     "undoing-check-hook",
+    "undoing-question-twenty",
+    "undoing-question-power",
     "block-1787889437176",
+    "family-question-count",
+    "family-question-constant",
     "writing-heading",
     "writing-notation",
     "writing-practice-visual",
     "writing-rule-summary",
+    "writing-general-rule",
     "writing-question-reverse",
     "writing-question-naming",
     "wrapping-heading",
     "wrapping-recap",
-    "wrapping-next",
-    "undoing-question-twenty",
-    "undoing-question-power",
-    "family-question-count",
-    "family-question-constant"
+    "wrapping-next"
   ],
   "rows": [
     {
@@ -135,11 +136,59 @@
       }
     },
     {
+      "id": "layout-undoing-question-twenty",
+      "type": "stack",
+      "columns": [
+        [
+          "undoing-question-twenty"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-undoing-question-power",
+      "type": "stack",
+      "columns": [
+        [
+          "undoing-question-power"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
       "id": "layout-block-1787889437176",
       "type": "stack",
       "columns": [
         [
           "block-1787889437176"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-family-question-count",
+      "type": "stack",
+      "columns": [
+        [
+          "family-question-count"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-family-question-constant",
+      "type": "stack",
+      "columns": [
+        [
+          "family-question-constant"
         ]
       ],
       "props": {
@@ -171,7 +220,7 @@
       }
     },
     {
-      "id": "layout-writing-integral-formula",
+      "id": "layout-writing-practice-visual",
       "type": "stack",
       "columns": [
         [
@@ -188,6 +237,18 @@
       "columns": [
         [
           "writing-rule-summary"
+        ]
+      ],
+      "props": {
+        "maxWidth": "xl"
+      }
+    },
+    {
+      "id": "layout-writing-general-rule",
+      "type": "stack",
+      "columns": [
+        [
+          "writing-general-rule"
         ]
       ],
       "props": {
@@ -248,54 +309,6 @@
       "columns": [
         [
           "wrapping-next"
-        ]
-      ],
-      "props": {
-        "maxWidth": "xl"
-      }
-    },
-    {
-      "id": "editor-full-undoing-question-twenty",
-      "type": "stack",
-      "columns": [
-        [
-          "undoing-question-twenty"
-        ]
-      ],
-      "props": {
-        "maxWidth": "xl"
-      }
-    },
-    {
-      "id": "editor-full-undoing-question-power",
-      "type": "stack",
-      "columns": [
-        [
-          "undoing-question-power"
-        ]
-      ],
-      "props": {
-        "maxWidth": "xl"
-      }
-    },
-    {
-      "id": "editor-full-family-question-count",
-      "type": "stack",
-      "columns": [
-        [
-          "family-question-count"
-        ]
-      ],
-      "props": {
-        "maxWidth": "xl"
-      }
-    },
-    {
-      "id": "editor-full-family-question-constant",
-      "type": "stack",
-      "columns": [
-        [
-          "family-question-constant"
         ]
       ],
       "props": {

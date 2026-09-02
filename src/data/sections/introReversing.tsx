@@ -74,8 +74,23 @@ export const introReversingBlocks: ReactElement[] = [
                 >
                     power
                 </InlineTooltip>
-                {" "}each move. This lesson is the return trip, and there is a surprise waiting, because
-                the road home does not lead to just one answer.
+                {" "}each move. This lesson is the return trip. Reversing a derivative carries a
+                geometric meaning too, because{" "}
+                <InlineFormula
+                    latex="\textcolor{#0369A1}{\int_{a}^{b}} \textcolor{#0F766E}{f(x)}\,\textcolor{#0369A1}{dx}"
+                    colorMap={{}}
+                />
+                {" "}measures the area between the curve and the x-axis from a to b, and the{" "}
+                <InlineTooltip
+                    id="tooltip-intro-fundamental-theorem"
+                    color={NOTATION}
+                    bgColor="rgba(98, 204, 249, 0.18)"
+                    tooltip="The Fundamental Theorem of Calculus: if F is an antiderivative of f, then the area under f from a to b equals F(b) - F(a). Finding areas and reversing derivatives are the same task."
+                >
+                    Fundamental Theorem of Calculus
+                </InlineTooltip>
+                {" "}says that area is found by antidifferentiating f. There is a surprise waiting on
+                the way back, though, because the road home does not lead to just one answer.
             </EditableParagraph>
         </Block>
     </StackLayout>,

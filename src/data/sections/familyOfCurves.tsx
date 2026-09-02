@@ -7,6 +7,7 @@ import {
     InlineFormula,
     InlineLinkedHighlight,
     InlineScrubbleNumber,
+    InlineSpotColor,
     InlineTooltip,
     InlineClozeChoice,
     InlineClozeInput,
@@ -20,7 +21,7 @@ import {
     numberPropsFromDefinition,
     clozePropsFromDefinition,
     choicePropsFromDefinition,
-    linkedHighlightPropsFromDefinition,
+    spotColorPropsFromDefinition,
 } from "../variables";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -232,10 +233,80 @@ function FamilyCurveFigure() {
 }
 
 export const familyOfCurvesBlocks: ReactElement[] = [
+    <StackLayout key="layout-family-heading" maxWidth="xl">
+        <Block id="family-heading" padding="md">
+            <EditableH2 id="h2-family-heading" blockId="family-heading">
+                The Family of Curves
+            </EditableH2>
+        </Block>
+    </StackLayout>,
 
-    <StackLayout key="layout-block-1787889437176" maxWidth="xl">
-        <Block id="block-1787889437176" padding="sm">
-            <EditableParagraph id="para-block-1787889437176" blockId="block-1787889437176"></EditableParagraph>
+    <StackLayout key="layout-family-setup" maxWidth="xl">
+        <Block id="family-setup" padding="sm">
+            <EditableParagraph id="para-family-setup" blockId="family-setup">
+                Differentiate 2x⁴ + 7 and the 7 simply disappears, because a constant has no steepness
+                to contribute. So the reversal of{" "}
+                <InlineFormula
+                    latex="\clr{coef}{2}\clr{fn}{x}"
+                    colorMap={{ coef: "#B45309", fn: CURVE_HUE_DEEP }}
+                />
+                {" "}is{" "}
+                <InlineFormula
+                    latex="\clr{fn}{x}^{\clr{pow}{2}}"
+                    colorMap={{ fn: CURVE_HUE_DEEP, pow: POWER_HUE_DEEP }}
+                />
+                {" "}plus some constant, and here that constant is{" "}
+                <InlineScrubbleNumber
+                    id="scrubble-family-shift"
+                    varName="familyShift"
+                    {...numberPropsFromDefinition(getVariableInfo('familyShift'))}
+                    formatValue={(value) => value.toFixed(1)}
+                />
+                . Drag the{" "}
+                <InlineLinkedHighlight
+                    id="highlight-family-curve"
+                    varName="familyHighlight"
+                    highlightId="curve"
+                    color={CURVE_HUE_DEEP}
+                    bgColor="rgba(98, 208, 173, 0.22)"
+                >
+                    teal curve
+                </InlineLinkedHighlight>
+                {" "}up or down to the height you think the answer sits at, then let go.
+            </EditableParagraph>
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-family-shift-visual" maxWidth="xl">
+        <Block id="family-shift-visual" padding="sm" hasVisualization>
+            <FamilyCurveFigure />
+        </Block>
+    </StackLayout>,
+
+    <StackLayout key="layout-family-plus-c" maxWidth="xl">
+        <Block id="family-plus-c" padding="sm">
+            <EditableParagraph id="para-family-plus-c" blockId="family-plus-c">
+                Letting go reveals the catch:{" "}
+                <InlineLinkedHighlight
+                    id="highlight-family-rest"
+                    varName="familyHighlight"
+                    highlightId="family"
+                    color={CONSTANT_HUE_DEEP}
+                    bgColor="rgba(172, 139, 249, 0.22)"
+                >
+                    every other curve in the family
+                </InlineLinkedHighlight>
+                {" "}has exactly the same steepness at each x, so all of them differentiate to 2x and
+                only the height tells them apart. That is why a reversal is never finished without a{" "}
+                <InlineSpotColor
+                    id="spot-family-constant"
+                    varName="roleConstant"
+                    {...spotColorPropsFromDefinition(getVariableInfo('roleConstant'))}
+                >
+                    + C
+                </InlineSpotColor>
+                {" "}on the end, standing in for every height at once.
+            </EditableParagraph>
         </Block>
     </StackLayout>,
 

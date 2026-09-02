@@ -96,7 +96,8 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         min: -3,
         max: 3,
         step: 0.5,
-        color: '#62D0AD',
+        color: '#7C3AED',
+        bgColor: 'rgba(172, 139, 249, 0.18)',
     },
     familyCommitted: {
         defaultValue: 0,

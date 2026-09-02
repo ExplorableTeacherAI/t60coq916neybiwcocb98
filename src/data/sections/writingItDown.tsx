@@ -564,7 +564,7 @@ export const writingItDownBlocks: ReactElement[] = [
 
     <StackLayout key="layout-block-1788377503784" maxWidth="xl">
         <Block id="block-1788377503784" padding="sm">
-            <EditableParagraph id="para-block-1788377503784" blockId="block-1788377503784">can you add the conceot of when a contacnt is diddferntiated what will happen nx zero power</EditableParagraph>
+            <EditableParagraph id="para-block-1788377503784" blockId="block-1788377503784"></EditableParagraph>
         </Block>
     </StackLayout>,
 

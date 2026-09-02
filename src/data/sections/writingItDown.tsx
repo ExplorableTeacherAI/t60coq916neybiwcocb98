@@ -4,6 +4,7 @@ import { StackLayout } from "@/components/layouts";
 import {
     EditableH2,
     EditableParagraph,
+    InlineFormula,
     InlineTooltip,
     InlineLinkedHighlight,
     InlineSpotColor,
@@ -564,7 +565,29 @@ export const writingItDownBlocks: ReactElement[] = [
 
     <StackLayout key="layout-block-1788377503784" maxWidth="xl">
         <Block id="block-1788377503784" padding="sm">
-            <EditableParagraph id="para-block-1788377503784" blockId="block-1788377503784"></EditableParagraph>
+            <EditableParagraph id="para-block-1788377503784" blockId="block-1788377503784">
+                One loose end explains why the C has to be there. A constant is a power of x in
+                disguise, because 7 is the same as{" "}
+                <InlineFormula
+                    latex="\clr{coef}{7}\clr{fn}{x}^{\clr{pow}{0}}"
+                    colorMap={{ coef: "#B45309", fn: FUNCTION_HUE.deep, pow: "#4338CA" }}
+                />
+                , and the power rule multiplies by that{" "}
+                <InlineSpotColor
+                    id="spot-writing-zero-power"
+                    varName="rolePower"
+                    {...spotColorPropsFromDefinition(getVariableInfo('rolePower'))}
+                >
+                    power
+                </InlineSpotColor>
+                {" "}before dropping it by one. Multiplying by zero wipes the whole term out, since{" "}
+                <InlineFormula
+                    latex="\textcolor{#4338CA}{0} \times \textcolor{#B45309}{7}\textcolor{#0F766E}{x}^{\textcolor{#4338CA}{-1}} = 0"
+                    colorMap={{}}
+                />
+                , so every constant differentiates to nothing and no reversal can tell which one was
+                there.
+            </EditableParagraph>
         </Block>
     </StackLayout>,
 

@@ -19,7 +19,7 @@ export const introReversingBlocks: ReactElement[] = [
     <StackLayout key="layout-intro-title" maxWidth="xl">
         <Block id="intro-title" padding="md">
             <EditableH1 id="h1-intro-title" blockId="intro-title">
-                Integration: Reversing Differentiation
+                Indefinite Integration: Reversing Differentiation
             </EditableH1>
         </Block>
     </StackLayout>,

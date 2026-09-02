@@ -418,7 +418,7 @@ export const writingItDownBlocks: ReactElement[] = [
     <StackLayout key="layout-writing-heading" maxWidth="xl">
         <Block id="writing-heading" padding="md">
             <EditableH2 id="h2-writing-heading" blockId="writing-heading">
-                Writing It Down
+                Indefinite Integral Notation
             </EditableH2>
         </Block>
     </StackLayout>,

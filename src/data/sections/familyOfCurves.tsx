@@ -236,7 +236,7 @@ export const familyOfCurvesBlocks: ReactElement[] = [
     <StackLayout key="layout-family-heading" maxWidth="xl">
         <Block id="family-heading" padding="md">
             <EditableH2 id="h2-family-heading" blockId="family-heading">
-                The Family of Curves
+                The Constant of Integration
             </EditableH2>
         </Block>
     </StackLayout>,

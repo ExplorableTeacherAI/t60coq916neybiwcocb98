@@ -515,7 +515,7 @@ export const undoingPowerRuleBlocks: ReactElement[] = [
     <StackLayout key="layout-undoing-heading" maxWidth="xl">
         <Block id="undoing-heading" padding="md">
             <EditableH2 id="h2-undoing-heading" blockId="undoing-heading">
-                Undoing the Power Rule
+                The Reverse Power Rule
             </EditableH2>
         </Block>
     </StackLayout>,
